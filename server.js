@@ -25,6 +25,9 @@ if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
 }
 
+// Serve static files from the uploads directory
+app.use('/uploads', express.static(uploadDir));
+
 // Set up Multer for file uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {

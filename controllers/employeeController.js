@@ -6,7 +6,7 @@ const createEmployee = async (req, res) => {
   try {
     console.log(req.body); // Log the request body to verify incoming data
 
-    const { name, email, position, department, phone, address } = req.body;
+    const { name, email, position, department, phone, address, permanentAddress, bloodGroup, dob, officeId } = req.body;
 
     // Check if all required fields are present
     if (!name || !email || !position || !department || !phone || !address) {
@@ -28,6 +28,10 @@ const createEmployee = async (req, res) => {
       department,
       phone,
       address,
+      permanentAddress,
+      bloodGroup,
+      dob,
+      officeId,
       image: req.file ? req.file.path : null, // Save the file path
     });
 
