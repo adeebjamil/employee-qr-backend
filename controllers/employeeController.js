@@ -62,4 +62,36 @@ const getEmployeeById = async (req, res) => {
   }
 };
 
-module.exports = { createEmployee, getEmployeeById };
+// Get all employees
+const getEmployees = async (req, res) => {
+  try {
+    const employees = await Employee.find();
+    res.status(200).json(employees);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+// Update employee
+const updateEmployee = async (req, res) => {
+  try {
+    const employee = await Employee.findById(req.params.id);
+    if (!employee) {
+      return res.status(404).json({ message: 'Employee not found' });
+    }
+
+    const updates = req.body;
+    if (req.file) {
+      updates.image = req.file.filename; // Ensure the image filename is saved
+    }
+
+    Object.assign(employee, updates);
+    await employee.save();
+
+    res.status(200).json(employee);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+module.exports = { getEmployees, createEmployee, getEmployeeById, updateEmployee };
